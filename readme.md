@@ -59,15 +59,18 @@ Este sistema ayuda a los usuarios a encontrar compañeros de cuarto (roommates) 
 - nombre
 - email
 - teléfono
-- edad
+- redes_sociales
+- fecha_nacimiento
 - género
 - ocupación
 - deportes
 - presupuesto_máximo
 - hábitos_limpieza (1-5)
 - horario_trabajo
-- mascota (boolean)
-- fumador (boolean)
+- tiene_mascota (boolean)
+- acepta_mascota (boolean)
+- es_fumador (boolean)
+- acepta_fumador (boolean)
 - intereses (JSON)
 - preferencias_roommate (JSON)
 - fecha_registro
