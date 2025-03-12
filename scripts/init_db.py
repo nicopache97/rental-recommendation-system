@@ -2,6 +2,7 @@ import sqlite3
 from faker import Faker
 import numpy as np
 import re
+import os
 import json
 from datetime import datetime
 
@@ -9,7 +10,10 @@ from datetime import datetime
 fake = Faker()
 
 # Connect to the database
-conn = sqlite3.connect('tables.db')
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(script_dir, '..', 'db', 'tables.db')
+conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Create Tables
