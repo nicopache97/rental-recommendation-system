@@ -9,6 +9,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . . 
 
 # si no encuentra la base de datos, crea una base de datos de ejemplo
-RUN if [ ! -f /table.db ]; then python ./utils/crear_example_bd.py; fi
+RUN if [ ! -f /db/table.db ]; then python ./scripts/init_db.py; fi
 
 CMD [ "python", "./your-daemon-or-script.py" ]
