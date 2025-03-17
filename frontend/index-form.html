@@ -1,0 +1,308 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roommate Finder</title>
+    <style>
+        :root {
+            --primary: #5A6F72;
+            --accent: #7E9D9B;
+            --background: #F5F5F5;
+            --surface: rgba(255, 255, 255, 0.9);
+            --border: rgba(0, 0, 0, 0.1);
+            --text-primary: #2D3436;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+            margin: 0;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        h1, h2 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 0.75rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-2px);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(126, 157, 155, 0.2);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 1rem 0;
+        }
+
+        button:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        #roommate-list {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .roommate {
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .roommate:hover {
+            transform: translateY(-3px);
+        }
+
+        .roommate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+            border-radius: 0.75rem;
+        }
+
+        .roommate h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        [type="number"], [type="date"], select {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        #guardar-cuenta {
+            background: var(--accent);
+            margin-right: 1rem;
+        }
+
+        .compatibilidad-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "uuid": "https://jspm.dev/uuid"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Roommate Finder</h1>
+
+        <section id="description">
+            <h2>Cómo usar la aplicación</h2>
+            <p>Ingresa tu información personal y preferencias para encontrar los mejores compañeros de alquiler.</p>
+        </section>
+
+        <section id="user-data-form">
+            <h2>Ingresa tus datos</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono">
+            </div>
+
+            <div class="form-group">
+                <label for="redes_sociales">Redes Sociales:</label>
+                <input type="text" id="redes_sociales" name="redes_sociales">
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+            </div>
+
+            <div class="form-group">
+                <label for="genero">Género:</label>
+                <select id="genero" name="genero">
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ocupacion">Ocupación:</label>
+                <input type="text" id="ocupacion" name="ocupacion">
+            </div>
+
+            <div class="form-group">
+                <label for="deportes">Deportes:</label>
+                <input type="text" id="deportes" name="deportes">
+            </div>
+
+            <div class="form-group">
+                <label for="presupuesto_maximo">Presupuesto Máximo (usd/mes) : </label>
+                <input type="range" id="presupuesto_maximo" name="presupuesto_maximo" min="300" max="3000" step="50" oninput="this.nextElementSibling.value = this.value">
+                <output>500</output>
+            </div>
+
+            <div class="form-group">
+                <label for="habitos_limpieza">Hábitos de Limpieza (1-5):</label>
+                <select id="habitos_limpieza" name="habitos_limpieza" arial-placeholder="Selecciona un valor">
+                    <option value="1">Limpieza básica ocasional</option>
+                    <option value="2">Limpieza regular pero no exhaustiva</option>
+                    <option value="3">Limpieza semanal, orden general</option>
+                    <option value="4">Muy ordenado y limpio regularmente</option>
+                    <option value="5">Extremadamente meticuloso con la limpieza</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="horario_trabajo">Horario de Trabajo:</label>
+                <select id="horario_trabajo" name="horario_trabajo">
+                    <option value="1">Limpieza básica ocasional</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tiene_mascota">Tiene Mascota:</label>
+                <select id="tiene_mascota" name="tiene_mascota">
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="acepta_mascota">Acepta Mascota:</label>
+                <select id="acepta_mascota" name="acepta_mascota">
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="es_fumador">Es Fumador:</label>
+                <select id="es_fumador" name="es_fumador">
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="acepta_fumador">Acepta Fumador:</label>
+                <select id="acepta_fumador" name="acepta_fumador">
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="intereses">Intereses (JSON):</label>
+                <input type="text" id="intereses" name="intereses" placeholder='["leer", "cine"]'>
+            </div>
+
+            <div class="form-group">
+                <label for="preferencias_roommate">Preferencias Roommate (JSON):</label>
+                <input type="text" id="preferencias_roommate" name="preferencias_roommate" placeholder='{"edad_minima": 20, "edad_maxima": 30}'>
+            </div>
+
+            <button id="guardar-cuenta">Guardar Cuenta</button>
+            <button id="buscar">Buscar</button>
+        </section>
+
+        <section id="results" class="results">
+            <h2>Resultados</h2>
+            <div id="roommate-list">
+                <!-- Roommate results will be displayed here -->
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
