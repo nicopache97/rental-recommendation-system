@@ -7,3 +7,4 @@
 2. activar el entorno virtual ``source venv/bin/activate``
 3. instalar depedencias de entorno ``pip install "fastapi[standard]"``
 4. instalar dependencias de proyecto ``pip install -r requirements.txt``
+- implementa el insertar usuario y calcular las similaridades (puede tener fallos)
