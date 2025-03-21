@@ -257,6 +257,20 @@ def insert_user(self, user_data: Dict[str, Any]) -> int:
             Tupla con los datos del usuario o None si no se encuentra.
         """
         return self.fetch_one("SELECT * FROM usuarios WHERE email = ?", (email,))
+
+    def mail_exist(self, email: str) -> bool:
+        """
+        Verifica si un correo ya está registrado en la base de datos.
+        
+        Args:
+            email: Email del usuario a verificar.
+            
+        Returns:
+            True si el correo ya existe, False en caso contrario.
+        """
+        user = self.get_user_by_email(email)
+        return user is not None
+
     
     def get_active_users(self) -> List[tuple]:
         """
