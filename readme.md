@@ -96,10 +96,10 @@ Este sistema ayuda a los usuarios a encontrar compañeros de cuarto (roommates) 
 
 ### Fase 1: MVP (Producto Mínimo Viable)
 - [x] Definición de modelo de datos
-- [ ] Implementación de base de datos relacional
+- [x] Implementación de base de datos relacional
 - [ ] Desarrollo de API básica CRUD (Create, Read, Update, Delete)
 - [ ] Frontend básico de registro y visualización de perfil
-- [ ] Algoritmo simple de similitud basado en atributos clave
+- [x] Algoritmo simple de similitud basado en atributos clave
 
 ### Fase 2: Características Principales
 - [ ] Sistema completo de autenticación y autorización
