@@ -280,6 +280,23 @@ def insert_user(self, user_data: Dict[str, Any]) -> int:
             Lista de tuplas con los datos de los usuarios activos.
         """
         return self.fetch_all("SELECT * FROM usuarios WHERE activo = 1")
+
+    def get_active_users_id(self) -> List[int]:
+        """
+        Obtiene una lista de IDs de los usuarios activos directamente desde la base de datos.
+        
+        Returns:
+            Una lista de IDs (int) de los usuarios activos.
+        """
+        if not self.conn:
+            self.connect()
+
+        query = "SELECT id FROM usuarios WHERE activo = 1"  # Selecciona solo los IDs de usuarios activos
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()  # Obtiene todos los resultados
+        list_id = [row[0] for row in results]  # Extrae los IDs de las filas
+        return list_id
+
     
     def deactivate_users(self, user_ids: List[int]) -> None:
         """

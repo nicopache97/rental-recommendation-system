@@ -42,7 +42,7 @@ async def insert_user(user: User):
     new_id = db.insert_user(user.dict())
     
     # Obtener la lista de IDs de usuarios activos
-    list_id = db.user_list()
+    list_id = db.get_active_users_id().
     
     # Calcular y registrar similitudes entre el nuevo usuario y los demás
     for i in list_id:
