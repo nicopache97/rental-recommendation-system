@@ -174,23 +174,39 @@ class DBManager:
         ''')
 
     # place commit after
-    def insert_user(self, user_data: Dict[str, Any]) -> int:
-        """
-        Inserta un nuevo usuario en la base de datos.
+def insert_user(self, user_data: Dict[str, Any]) -> int:
+    """
+    Inserta un nuevo usuario en la base de datos y retorna el ID del usuario insertado.
+    
+    Args:
+        user_data: Diccionario con los datos del usuario.
         
-        Args:
-            user_data: Diccionario con los datos del usuario.
-            
-        Returns:
-            ID del usuario insertado.
-        """
-        if not self.conn:
-            self.connect()
+    Returns:
+        ID del usuario insertado.
+    """
+    if not self.conn:
+        self.connect()
 
-        try:
-            self.cursor.execute("INSERT INTO usuarios (nombre, email, telefono, redes_sociales, fecha_nacimiento, genero, ocupacion, deportes, presupuesto_maximo, habitos_limpieza, horario_trabajo, tiene_mascota, acepta_mascota, es_fumador, acepta_fumador, intereses, preferencias_roommate, fecha_registro, ultima_actualizacion, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", list(user_data.values()) )
-        except sqlite3.IntegrityError:  # Handle potential unique constraint violations
-            pass  # Skip if email is already in the database
+    try:
+        # Ejecutar el comando INSERT
+        self.cursor.execute(
+            """
+            INSERT INTO usuarios (
+                nombre, email, telefono, redes_sociales, fecha_nacimiento,
+                genero, ocupacion, deportes, presupuesto_maximo, habitos_limpieza,
+                horario_trabajo, tiene_mascota, acepta_mascota, es_fumador,
+                acepta_fumador, intereses, preferencias_roommate, fecha_registro,
+                ultima_actualizacion, activo
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            list(user_data.values())
+        )
+        new_id = self.cursor.lastrowid         # Obtener el último ID insertado
+        self.conn.commit()  # Confirmar la transacción
+        return new_id
+    except sqlite3.IntegrityError as e:
+        raise ValueError(f"Error al insertar el usuario: {e}")
     
     def update_user(self, user_id: int, user_data: Dict[str, Any]) -> bool:
         """

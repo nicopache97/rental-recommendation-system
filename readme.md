@@ -38,7 +38,7 @@ Este sistema ayuda a los usuarios a encontrar compañeros de cuarto (roommates) 
 
 ### Backend
 - Python 3.9+
-- Framework: FastAPI
+- Framework: [FastAPI](https://fastapi.tiangolo.com/) 
 - ORM: SQLAlchemy
 - Cálculo de similitud: Scikit-learn
 
